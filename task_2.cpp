@@ -5,11 +5,11 @@ class Bit_Vector
 {
 	private:
 		int depth;
-		int *bits;
+		unsigned char *bits;
 	public:
-		Bit_Vector(int _depth, int *_bits) : depth(_depth)
+		Bit_Vector(int _depth, unsigned char *_bits) : depth(_depth)
 		{
-			bits = new int [depth];
+			bits = new unsigned char [depth];
 			std::copy(_bits, _bits + _depth, bits);
 		}
 		~Bit_Vector()
@@ -23,11 +23,11 @@ class Bit_Vector
 
 		Bit_Vector get_bit_field(int offset, int field_depth)
 		{
-                        if (field_depth + offset > depth)
-                        {
-                                throw(std::range_error("index is out of range"));
-                        }
-			int buf[field_depth];
+            if (field_depth + offset > depth)
+            {
+                    throw(std::range_error("index is out of range"));
+            }
+			unsigned char buf[field_depth];
 			std::copy(bits + offset, bits + offset + field_depth, buf);
 			return Bit_Vector(field_depth, buf);
 		}
@@ -52,10 +52,10 @@ class Bit_Vector
 
 		void set_bit_field(int offset, Bit_Vector &vector)
 		{
-                        if (vector.depth + offset > depth)
-                        {
-                                throw(std::range_error("index is out of range"));
-                        }
+            if (vector.depth + offset > depth)
+            {
+                    throw(std::range_error("index is out of range"));
+            }
 			std::copy(vector.bits + offset, vector.bits + offset + vector.depth, bits);
 		}
 
@@ -84,7 +84,7 @@ class Bit_Vector
 
 int main()
 {
-	int *arr = new int[12]{1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1};
+	unsigned char *arr = new unsigned char[12]{1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1};
 	Bit_Vector v(12, arr);
 	std::cout << v.to_string() << "\n";
 }
