@@ -33,7 +33,7 @@ int main()
 	{
 		v.push_back(i+1);
 	}
-	int n = 5;
+	int n = 10;
 	std::vector<int> res = random_sample(n, v);
 	for (int i = 0; i < n; i++)
         {
