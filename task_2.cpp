@@ -1,6 +1,9 @@
 #include <iostream>
 #include <vector>
-
+#include <cstring>
+#include <cmath>
+#include <string>
+#include <algorithm>
 class Bit_Vector
 {
 	private:
@@ -9,8 +12,11 @@ class Bit_Vector
 	public:
 		Bit_Vector(int _depth, unsigned char *_bits) : depth(_depth)
 		{
+			int x = sizeof(_bits);
 			bits = new unsigned char [depth];
 			std::copy(_bits, _bits + _depth, bits);
+			for (int i = x; i < depth; i++)
+				bits[i] = 0;
 		}
 		~Bit_Vector()
 		{
@@ -62,29 +68,53 @@ class Bit_Vector
 		std::string to_string()
 		{
 			std::string res;
-			int i = 0, num = 0;
-			while ((i + 3) < depth)
+			int hex = 0;
+			for (int i = 0; i < depth; i++)
 			{
-				num += bits[i]*8 + bits[i+1]*4 + bits[i+2]*2 + bits[i+3];
-				std::cout << num << "\n";
-				if (num < 10)
+				std::cout << (int) bits[i] << "\n";
+				hex += bits[i]*pow(256, i);
+			}
+			std::cout << hex << "\n";
+			while (hex > 0)
+			{
+				if (hex%16 == 10)
 				{
-					res += std::to_string(num);
+					 res.push_back('A');
 				}
+				else if (hex%16 == 11)
+				{
+					res.push_back('B');
+				}
+                                else if (hex%16 == 12)
+                                {
+                                        res.push_back('C');
+                                }
+                                else if (hex%16 == 13)
+                                {
+                                        res.push_back('D');
+				}
+                                else if (hex%16 == 14)
+                                {
+                                        res.push_back('E');
+                                }
+                                else if (hex%16 == 15)
+                                {
+                                        res.push_back('F');
+                                }
 				else
 				{
-					res.push_back(char(65 + num - 10));
+					res.push_back(std::to_string(hex%16)[0]);
 				}
-				i += 4;
-				num = 0;
+				hex /= 16;
 			}
+			std::reverse(res.begin(), res.end());
 			return res;
 		}
 };
 
 int main()
 {
-	unsigned char *arr = new unsigned char[12]{1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1};
-	Bit_Vector v(12, arr);
-	std::cout << v.to_string() << "\n";
+	uint64_t tmp = 0x1234567;
+	Bit_Vector v (20, reinterpret_cast <unsigned char*> (&tmp));
+	std::cout << v.to_string () << std::endl;
 }

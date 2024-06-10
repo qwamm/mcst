@@ -14,7 +14,7 @@ std::vector<int> random_sample (int n, std::vector<int> &A) //reservoir sampling
 		result.push_back(A[i]);
 	}
 
-	for (int i = n + 1; i < A.size(); i++)
+	for (int i = 0; i < A.size(); i++)
 	{
 		std::random_device rd;
 		std::mt19937 gen(rd());
@@ -29,7 +29,7 @@ std::vector<int> random_sample (int n, std::vector<int> &A) //reservoir sampling
 int main()
 {
 	std::vector<int> v;
-	for (int i = 0; i < 15; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		v.push_back(i+1);
 	}
