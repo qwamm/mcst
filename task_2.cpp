@@ -71,10 +71,8 @@ class Bit_Vector
 			int hex = 0;
 			for (int i = 0; i < depth; i++)
 			{
-				std::cout << (int) bits[i] << "\n";
 				hex += bits[i]*pow(256, i);
 			}
-			std::cout << hex << "\n";
 			while (hex > 0)
 			{
 				if (hex%16 == 10)
